@@ -1,0 +1,365 @@
+{% extends 'super_layout.html' %}{% load crispy_forms_tags %}
+{% block title %}
+Trades
+{% endblock title %}
+{% block style %}
+<style>
+
+  .m-table-row {
+    display: table;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+ 
+
+.m-row {
+    height: 49px;
+    line-height: 49px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.m-table-cell {
+    display: table-cell;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-width: 1%;
+}
+
+.m-left {
+    height: 49px;
+    line-height: 49px;
+    text-align: left;
+}
+
+.m-row-value {
+    font-size: 14px;
+}
+
+.m-row-value.amount {
+    font-size: 22px;
+}
+
+.m-right {
+    height: 49px;
+    line-height: 49px;
+    text-align: right;
+    color: #353a45;
+}
+
+.m-left.amount {
+    font-size: 22px;
+}
+
+</style>
+{% endblock style %}
+
+
+{% block editor %}
+{% csrf_token %}
+<div class="editor " role="document">
+    <div class="container">
+        <div class="editor-header">
+            <div class="text-center">
+                <h3 class="text-gray-900 ">View Trades</h3>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <!-- Form Basic -->
+                <div class="card mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"> </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="dialog-content">
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left amount"><span>Amount</span> (USD)
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right amount m-row-value">$<span id="trade-amount"></span></div>
+                                </div>
+                            </div>
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>Status</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value"><span class="trade-status" id="trade-status"></span></div>
+                                </div>
+                            </div>
+            
+            
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>Time</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value" id="trade-time"></div>
+                                </div>
+                            </div>
+            
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>symbol</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value" id="trade-symbol"></div>
+                                </div>
+                            </div>
+            
+            
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>Expected Pay</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value">$<span id="trade-exp"></span></div>
+                                </div>
+                            </div>
+            
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>Leverage</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value"><span id="trade-leverage"></span>x</div>
+                                </div>
+                            </div>
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>Interval</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value"><span id="trade-interval"></span>min</div>
+                                </div>
+                            </div>
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>End Price</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value">$<span id="trade-endp"></span></div>
+                                </div>
+                            </div>
+            
+            
+                            <div class="m-table-row m-row">
+                                <div class="m-table-cell">
+                                    <div class="m-left"><span>End Time</span>
+                                    </div>
+                                </div>
+                                <div class="m-table-cell">
+                                    <div class="m-right m-row-value" id="trade-endt"></div>
+                                </div>
+                            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
+                    <button id="closebtn" type="submit" class="btn btn-danger">Close</button>
+                 </div>
+              
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock editor %}
+
+{% block content %}
+
+<!--[container-fluid]-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Trades</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trades</li>
+        </ol>
+    </div>
+    <div class="row" id="hiddensm">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+                </div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>User</th>
+                                <th>symbol</th>
+                                <th>amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                         
+                        <tbody>
+                               {% for obj in trades %}
+                            <tr>
+                                <td>
+                                    <a href="#">{{obj.user.username}}</a>
+                                </td>
+                                <td>{{obj.sysmbol}}</td>
+                                <td>${{obj.amount}}</td>
+                                <td><span class="badge badge-success">{{obj.status}}</span></td>
+<td><a href="#/{{obj.id}}" onclick="(get_trade_by_pk('{{obj.id}}'))">Details</a></td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="hiddenxl">
+
+        {% for obj in trades %}
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="#/{{obj.id}}" onclick="(get_trade_by_pk('{{obj.id}}'))" class="card h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{obj.user.username}}</div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="text-success mr-2"><i class="fa"></i>${{obj.amount}}</span>
+                                <span> {{obj.sysmbol}}</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <img class="img-profile rounded-circle" src="/assets/img/payment-options.png" style="max-width: 42px">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+<!--[container-fluid ends]-->
+
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>copyright &copy;
+                <script> document.write(new Date().getFullYear()); </script> - developed by
+                <b><a href="#" target="_blank">Sammy</a></b>
+            </span>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+
+
+
+{% endblock content %}
+{% block script %}
+
+
+ <script>
+       $(document).ready(function () {
+        $('#dataTable').DataTable(); // ID From dataTable 
+        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+
+    });
+function get_trade_by_pk(trade_pk) {
+    $(".over-lay").addClass('active');
+    $.ajax({
+            type: 'POST',
+            url: "/superadmin/trades/",
+            data: {
+
+                "trade_id": trade_pk,
+                csrfmiddlewaretoken : $("input[name='csrfmiddlewaretoken']").val()
+            },
+            success: function(data) {
+                console.log(data)
+
+                if (data.status == 'pending') {
+                    $(".trade-status").addClass('text-warning')
+                } else if (data.status == 'gain') {
+                    $(".trade-status").addClass('text-success')
+                } else {
+                    $(".trade-status").addClass('text-danger')
+                }
+
+
+
+                $("#trade-amount").text(`${data.amount}`)
+                $("#trade-status").text(`${data.status}`)
+                $("#trade-time").text(`${data.time}`)
+                $("#trade-symbol").text(`${data.symbol}`)
+                $("#trade-exp").text(`${data.exp_pay}`)
+                $("#trade-leverage").text(`${data.leverage}`)
+                $("#trade-interval").text(`${data.interval}`)
+                $("#trade-endp").text(`${data.end_price}`)
+                $("#trade-endt").text(`${data.end_time}`)
+
+
+
+                $('.editor').addClass('active')
+
+            },
+            complete: function() {
+                $('.over-lay').removeClass('active');
+            }
+        })
+}
+ </script>
+{% endblock script %}

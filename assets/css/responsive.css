@@ -1,0 +1,286 @@
+/* [ RESPONSIVE DESIGN STYLES ] */
+
+
+/*================================================== */
+
+
+/*** Only Wide Screens ***/
+
+@media(min-width:1600px) {}
+
+
+/*** Large Devices, Wide Screens ***/
+
+@media (min-width: 1200px) {
+    .sidebar li.active {
+        margin-top: 90px;
+    }
+}
+
+
+/*** Devices Width 767px and Up ***/
+
+@media (min-width:767px) {}
+
+
+/*** Only Medium Devices, Desktops ***/
+
+@media (max-width:1200px) and (min-width:992px) {
+    .title2 {
+        font-size: 58px;
+        line-height: 60px;
+    }
+    #header nav .nav-link {
+        font-size: 15px;
+        padding: 35px 10px;
+    }
+}
+
+
+/* Small Devices, Tablets */
+
+@media (max-width: 992px) {
+    .title2 {
+        font-size: 44px;
+        line-height: 50px;
+        max-width: 430px;
+    }
+    .banner-content h3 {
+        font-size: 34px;
+        line-height: 40px;
+    }
+}
+
+
+/* Small Devices Potrait */
+
+@media (max-width: 767px) {
+    #header {
+        background: #090C10 none repeat scroll 0 0;
+        height: 57px;
+    }
+    #header .nav-logo {
+        height: inherit;
+        left: 0;
+        padding: 0;
+        max-width: 130px;
+        padding: 10px 0 !important;
+    }
+    #header nav .main-menu {
+        display: none;
+    }
+    #header nav .main-menu.active {
+        display: block;
+        width: 100%;
+        flex-direction: column;
+        position: absolute;
+        background: #090C10;
+        left: 0;
+        top: 56px;
+        text-align: center;
+        transition: 0.3s;
+        z-index: 999;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+    #header nav .nav-link {
+        padding: 18px 15px;
+    }
+    #header nav .main-menu.active .nav-item {
+        display: block;
+    }
+    #header nav .auth-menu {
+        display: none;
+    }
+    #header nav .hamburger {
+        display: block;
+        cursor: pointer;
+        padding: 13px 0;
+    }
+    #header nav .hamburger.active .bars:nth-child(2) {
+        opacity: 0;
+    }
+    #header nav .hamburger.active .bars:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    #header nav .hamburger.active .bars:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .hero-section .slide-content {
+        margin-top: -41px;
+    }
+    .hidden-xs {
+        display: none;
+    }
+    .hidden-lg {
+        display: block !important;
+    }
+    .title2 {
+        font-size: 32px !important;
+        line-height: 40px;
+    }
+    .hero-section {
+        max-height: 420px;
+    }
+    .hero-section::after {
+        max-height: 420px;
+    }
+    .section-title .title {
+        font-size: 24px;
+    }
+    .title-head {
+        font-size: 30px;
+    }
+    .title-head-subtitle p {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .title-head-subtitle p:before,
+    .title-head-subtitle p:after {
+        display: none;
+    }
+    .support-images {
+        float: none;
+    }
+    .support-content {
+        padding-left: 0px;
+        margin-top: 20px;
+    }
+    .support-services {
+        padding: 30px 20px;
+    }
+    .banner-content {
+        padding: 0px 0px;
+    }
+    .banner-content h3 {
+        font-size: 25px;
+        line-height: 36px;
+    }
+    .banner-btn {
+        padding: 11px 15px;
+        font-size: 17px;
+    }
+    .banner {
+        height: 390px;
+    }
+    .banner .overlay {
+        height: 390px;
+    }
+    .about-section .about-section-container .title {
+        margin-top: 20px;
+    }
+    .onlinestat-section .stat-item h3 {
+        font-size: 22px;
+    }
+    .onlinestat-section .stat-item p {
+        font-size: 13px;
+    }
+    /* [dashboard] */
+    #dashheader {
+        height: 50px;
+    }
+    #dashheader nav .nav-logo {
+        padding: 0 0;
+    }
+    #dashheader nav .main-menu {
+        display: none;
+    }
+    #dashheader nav .main-menu.active {
+        display: block;
+        width: 100%;
+        flex-direction: column;
+        position: absolute;
+        background-color: #020c16;
+        background-repeat: no-repeat;
+        left: 0;
+        top: 49px;
+        transition: 0.3s;
+        z-index: 999;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+    }
+    #dashheader nav .main-menu.active .nav-item {
+        display: block;
+    }
+    #dashheader nav .main-menu .nav-item .nav-link {
+        color: #fff;
+        padding: 10px;
+        background: #0e122c;
+        margin-bottom: 18px;
+    }
+    #dashheader nav .main-menu .nav-item .nav-link:hover {
+        background: #3f498b;
+        color: #fff;
+    }
+    #dashheader nav .main-menu .nav-item .nav-link.active {
+        background: #3f498b;
+        color: #fff;
+    }
+    #dashheader nav .main-menu .nav-item .nav-link span {
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    #dashheader nav .nav-logo {
+        margin-left: 0;
+    }
+    #dashheader nav .notify {
+        display: none;
+    }
+    #dashheader nav .hamburger {
+        display: block;
+        cursor: pointer;
+        padding: 10px 0;
+    }
+    .wrapper {
+        display: block;
+    }
+    .sidebar {
+        display: none;
+    }
+    #center-content {
+        margin-top: 80px;
+        width: 100%;
+    }
+    #dashheader .container-fliud {
+        padding: 0 10px !important;
+    }
+    .right-content .well {
+        min-height: 450px;
+    }
+    .wrapper .right-content {
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+    div#content-wrapper {
+        width: 100%;
+    }
+    div#content {
+        margin-top: 46px;
+    }
+    div#content .breadcrumb {
+        margin-top: 20px;
+    }
+    .radio-toolbar label {
+        font-size: 15px
+    }
+    .notifymb {
+        display: block;
+        margin-right: -70px;
+        list-style: none;
+        font-size: 21px;
+    }
+    .notifymb li {
+        padding: 3.4px 0;
+    }
+    .notifymb li a {
+        color: #fff;
+    }
+    .notifymb .nav-item .nav-link .badge-counter {
+        position: absolute;
+        -webkit-transform: scale(.7);
+        transform: scale(.7);
+        -webkit-transform-origin: top right;
+        transform-origin: top right;
+        right: 52px;
+        margin-top: -0.25rem;
+    }
+}

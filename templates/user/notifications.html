@@ -1,0 +1,80 @@
+{% extends "user_layout.html" %} {% load crispy_forms_tags %} {% block title %} My Account {% endblock title %} {% block style %} {% endblock style %} {% block dialog %} {% endblock dialog %} {% block content %}
+
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+            <div class="d-flex align-items-center justify-content-between mb-0">
+                <h1 class="h3 mb-0 text-gray-800">Account</h1>
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Account</li>
+                </ol>
+
+            </div>
+            <div class="row hidden-lg mb-3">
+                <div class="col-lg-12">
+                    <script src="/assets/js/coingecko-coin-price-marquee-widget.js"></script>
+                    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#444444" locale="en" font-color="#ffffff"></coingecko-coin-price-marquee-widget>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if notification %}
+                    <div class="row d-flex justify-content-center">
+                        {% for notify in notification %}
+                        <div class="col-xl-10 p-3 d-flex align-items-center   osahan-post-header mt-3" style="background-color:  #274c65;  box-shadow: 0 3px 4.7px 0.3px rgb(0 0 0 / 24%), 0 1px 6.86px 0.14px rgb(0 0 0 / 16%) ">
+                            <div class="dropdown-list-image mr-3 d-flex align-items-center   justify-content-center rounded-circle text-prim"><i class="fas fa-bell text-success"></i></div>
+                            <div class="font-weight-bold mr-3">
+                                <div class="text-truncate text-white">{{ notify.title }}</div>
+                                <div class="small text-w-50">{{ notify.body }}</div>
+                            </div>
+                            <span class="ml-auto mb-auto">
+                                                                            
+                                                                            <br />
+                                                                            <div class="text-right text-muted pt-1">{{ notify.date|date:'Y/m/d ' }}</div>
+                                                                        </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+        
+        
+        
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-xl-8 mt-4">
+                            <div class="card   mt-5 " style="padding: 20px;">
+                                <div class="text-center">
+                                    <h5 class="text-primary">No Current Notifications </h5>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+        <!-- Container Fluid-->
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %} {% block script %}
+
+ 
+{% endblock script %}

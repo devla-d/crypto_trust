@@ -1,0 +1,297 @@
+{% extends 'super_layout.html' %}{% load crispy_forms_tags %}
+{% block title %}
+Ongoing Trades
+{% endblock title %}
+{% block style %}
+<style>
+    .m-table-row {
+        display: table;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+   
+</style>
+{% endblock style %}
+
+
+
+{% block editor %}
+<div class="editor" role="document">
+    <div class="container">
+        <div class="editor-header">
+            <div class="text-center">
+                <h3 class="text-gray-900 ">EDIT ongoing-trades</h3>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <!-- Form Basic -->
+                <div class="card mb-4 mt-2">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"> </h6>
+                    </div>
+                    <div class="card-body">
+             
+                        <div class="row">
+                            <div class=" col-md-12 mb-3 ">
+                                <form action="{% url 'super_process_ongoin_trades' %}" method="POST" class="edit">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="ty_pe" value="new">
+                                    <input type="hidden" name="trade_id" value="">
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-12">
+                                            <label for="">Amount</label>
+                                            <input type="number" name="amount" class="form-control bg-light border-1 small" placeholder="amount   in USD" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;" value="">
+    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label for="">symbol</label>
+                                            <select name="symbol" required id="symbol" class="form-control">
+                                                <option value="USD/BTC" >USD/BTC</option>
+                                                <option value="BCH/BTC" >BCH/BTC</option>
+                                                <option value="BCH/EUR" >BCH/EUR</option>
+                                                <option value="BCH/GBP" >BCH/GBP</option>
+                                                <option value="BTC-EOS" >BTC-EOS</option>
+                                                <option value="BTC/EUR" >BTC/EUR</option>
+                                                <option value="BTC/GBP" >BTC/GBP</option>
+                                                <option value="BTC/USD" >BTC/USD</option>
+                                                <option value="BTC/USDC" >BTC/USDC</option>
+                                                <option value="EOS/BTC" >EOS/BTC</option>
+                                                <option value="EOS/EUR" >EOS/EUR</option>
+                                                <option value="EOS/USD" >EOS/USD</option>
+                                                <option value="ETC/BTC" >ETC/BTC</option>      
+                                                <option value="ETC/EUR" >ETC/EUR</option>
+                                                <option value="ETC/GBP" >ETC/GBP</option>
+                                                <option value="ETC/USD" >ETC/USD</option>
+                                                <option value="ETH/BTC" >ETH/BTC</option>
+                                                <option value="ETH/EUR" >ETH/EUR</option>
+                                                <option value="ETH/GBP" >ETH/GBP</option>
+                                                <option value="ETH/USD" >ETH/USD</option>
+                                                <option value="LTC/BTC" >LTC/BTC</option>
+                                                <option value="LTC/EUR" >LTC/EUR</option>
+                                                <option value="LTC/GBP" >LTC/GBP</option>
+                                                <option value="LTC/USD" >LTC/USD</option>
+                                                <option value="MKR/BTC" >MKR/BTC</option>
+                                                <option value="PCP-BTC" >PCP-BTC</option>
+                                                <option value="PCP-BTC" >REP/BTC</option>
+                                                <option value="REP/USD" >REP/USD</option>
+                                                <option value="TXR/GBP">TXR/GBP</option>
+                                                <option value="XLM/BTC">XLM/BTC</option>
+                                                <option value="XLM/EUR">XLM/EUR</option>
+                                                <option value="XLM/USD">XLM/USD</option>
+                                                <option value="XRP/BTC">XRP/BTC</option>
+                                                <option value="XRP/EUR">XRP/EUR</option>
+                                                <option value="XRP/USD">XRP/USD</option>
+                                                <option value="ZEC/BTC">ZEC/BTC</option>
+                                                <option value="ZRX/BTC">ZRX/BTC</option>
+                                                <option value="ZRX/EUR">ZRX/EUR</option>
+                                                <option value="ZRX/USD">ZRX/USD</option>
+                                                           </select>    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label for="">Interval</label>
+                                            <select name="interval" class="form-control" id="interval">
+                                                <option value="1">1 min</option>
+                                                <option value="3">3 min</option>
+                                                <option value="5">5 min</option>
+                                                <option value="15">15 mins</option>
+                                                <option value="30">30 mins</option>
+                                                <option value="60">1 hr</option>
+                                                <option value="120">2 hr</option>
+                                                <option value="1440">1 day</option>
+                                               </select>    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label for="">Leverage</label>
+                                            <select class="form-control" name="leverage" id="leverage" required>
+                   
+                                                <!-- <option value="">Please select</option> -->
+                                                <option value="0.5" data-rate="high_sell" data-buy="" data-sell="3">0.5X</option>
+                                                <option value="1" data-rate="high_sell" data-buy="" data-sell="3">1.0X</option>
+                                                <option value="1.5" data-rate="high_sell" data-buy="" data-sell="3">1.5X</option>
+                                                <option value="2" data-rate="high_sell" data-buy="" data-sell="3">2.0X</option>
+                                                <option value="5" data-rate="high_sell" data-buy="" data-sell="3">5X</option>
+                                                <option value="10" data-rate="high_sell" data-buy="" data-sell="3">10X</option>
+        
+                                         </select>    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label for="">Pay</label>
+                                            <input type="number" name="pay" class="form-control bg-light border-1 small" placeholder="amount   in USD" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;" value="">
+    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <button type="submit" class="btn btn-secondary btn-block"> Update</button>
+                                        </div>
+                                           
+                                    </div>
+                                    
+                                     
+                                  </form>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
+                    <button id="closebtn" type="submit" class="btn btn-danger">Close</button>
+                </div>
+               
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock editor %}
+
+{% block content %}
+
+<!--[container-fluid]-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Ongoing Trades</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trades</li>
+        </ol>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+            <form action="" id="ontradeditform">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="open_editor()">New</button>
+
+                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+
+                    </div>
+                </div>
+                <div class="card-body md">
+                     <div class="table-responsive ">
+                        <table class="table align-items-center table-flush" id="dataTable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>symbol</th>
+                                    <th>amount</th>
+                                    <th>interval</th>
+                                    <th>leverage</th>
+                                    <th>Pay</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                             
+                            <tbody>
+                                    
+                           
+
+                                {% for obj in ongoin_trades_ %}
+
+                                <tr>
+                                    <td>
+                                        {{obj.sysmbol}}
+                                    </td>
+                                    <td>${{obj.amount}}</td>
+                                    <td>{{obj.interval}}mins</td>
+                                    <td>{{obj.leverage}}x</td>
+                                    <td>${{obj.pay}}</td>
+                                    <td>
+                                        
+                                        <input type="radio" name="selected_pk" value="{{obj.id}}" class="action-select" required>
+                                    
+                                    </td>
+                                </tr>
+                              
+    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                 </div>
+            </div>
+        </form>
+        </div>
+    </div>
+
+</div>
+<!--[container-fluid ends]-->
+
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>copyright &copy;
+                <script> document.write(new Date().getFullYear()); </script> - developed by
+                <b><a href="#" target="_blank">Sammy</a></b>
+            </span>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+
+
+
+{% endblock content %}
+{% block script %}
+
+
+<script>
+  $('#ontradeditform').on("submit",function(e) {
+      e.preventDefault()
+      $(".over-lay").addClass('active');
+
+      $.ajax({
+            type: 'POST',
+            url: "/superadmin/ongoing-trades/",
+            data: {
+
+                "trade_id": $("input[name='selected_pk']:checked").val(),
+                csrfmiddlewaretoken : $("input[name='csrfmiddlewaretoken']").val()
+            },
+            success: function(data) {
+                console.log(data)
+                $("input[name='amount']").val(`${data.amount}`)
+                $("input[name='symbol']").val(`${data.symbol}`)
+                $("input[name='interval']").val(`${data.interval}`)
+                $("input[name='leverage']").val(`${data.leverage}`)
+                $("input[name='pay']").val(`${data.pay}`)
+                $("input[name='ty_pe']").val('old')
+                $("input[name='trade_id']").val(`${data.trade_id}`)
+
+
+               
+                $('.editor').addClass('active')
+
+            },
+            complete: function() {
+                $('.over-lay').removeClass('active');
+            }
+        })
+  })
+  function open_editor(){
+    $(".over-lay").addClass('active');
+    $('.editor').addClass('active')
+    $('form.edit')[0].reset()
+    $("input[name='ty_pe']").val('new')
+    $('.over-lay').removeClass('active');
+  }
+</script>
+{% endblock script %}

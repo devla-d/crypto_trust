@@ -1,0 +1,267 @@
+{% extends 'super_layout.html' %}{% load crispy_forms_tags %}
+{% block title %}
+Documents
+{% endblock title %}
+{% block style %}
+ 
+{% endblock style %}
+{% block editor %}
+<div class="editor" role="document">
+    <div class="container">
+        <div class="editor-header">
+            <div class="text-center">
+                <h3 class="text-gray-900 ">View DOC</h3>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <!-- Form Basic -->
+                <div class="card mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"> </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="img-box text-center mb-4">
+                                    <img src="/assets/img/ab.jpg" class="doc-front" alt="Document" style="max-width:60% ;">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="img-box text-center ">
+                                    <img src="/assets/img/ab.jpg" class="doc-back" alt="Document"  style="max-width:60% ;">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row  justify-content-center">
+                            <div class="col-md-12 mt-2">
+                                <div class="table-responsive table-upgrade">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th> </th>
+                                                <th class="text-center">  </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>User</td>
+                                                <td class="text-center"><span id="doc-user"></span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Doc Name</td>
+                                                <td class="text-center text-danger"><span id="doc-name"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Doc Number</td>
+                                                <td class="text-center  text-warning  "><span id="doc-number"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>SSN</td>
+                                                <td class="text-center"><span id="ssn"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Coutry Issued</td>
+                                                <td class="text-center"><span id="doc-country"></span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Status</td>
+                                                <td class="text-center"><span id="doc-status"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+              
+                    <div class="d-flex space-bt">
+                        <button id="closebtn" type="submit" class="btn btn-danger">Close</button>
+                        <input type="hidden" name="with-pk">
+                        <button type="button" onclick="process_doc('approved')"
+                            class="btn btn-success acceptbtn">Approve</button>
+                        <button type="button" onclick="process_doc('declined')"
+                            class="btn btn-warning declinebtn">Decline</button>
+    {% csrf_token %} <input type="hidden" name="doc_pk">
+                    </div>
+             
+      
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock editor %}
+ 
+{% block content %}
+
+<!--[container-fluid]-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Documents</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">docs</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        {% for obj in kyc %}
+        <div class="col-lg-12 mb-4">
+            <a href="#/{{obj.id}}" onclick="(get_kyc_by_pk('{{obj.id}}'))" class="card h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{obj.user.username}}</div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class=" mr-2"><i class="fa"></i>{{obj.name}}</span>
+                                {% if obj.status == 'Proccessing' %}
+                                <span class="text-warning"> {{obj.status}}</span>
+                                {% elif obj.status == 'approved' %}
+                                <span class="text-success"> {{obj.status}}</span>
+
+                                {% else %}
+                                <span class="text-danger"> {{obj.status}}</span>
+
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <img class="img-profile rounded-circle" src="{{obj.document_front.url}}" style="max-width: 42px">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    
+
+</div>
+<!--[container-fluid ends]-->
+
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>copyright &copy;
+                <script> document.write(new Date().getFullYear()); </script> - developed by
+                <b><a href="#" target="_blank">Sammy</a></b>
+            </span>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+
+
+
+{% endblock content %}
+{% block script %}
+
+<script>
+    function get_kyc_by_pk(pk) {
+        $('.over-lay').addClass('active');
+        let doc_back = $('.doc-back');
+        let doc_front = $('.doc-front');
+        let doc_user = $('#doc-user');
+        let doc_number = $('#doc-number');
+        let doc_ssn = $('#ssn');
+        let doc_name = $('#doc-name');
+        let doc_country = $('#doc-country');
+        let doc_status = $('#doc-status');
+        $("input[name='doc_pk']").val(pk)
+        $.ajax({
+            type:"POST",
+            url : '/superadmin/documents/',
+            dataType : 'json',
+            data:{
+                'doc_id': pk,
+                "csrfmiddlewaretoken" : $("input[name='csrfmiddlewaretoken']").val()
+            },
+            success : function (data) {
+                console.log(data)
+                $('.editor').addClass('active')
+                doc_back.attr('src',`${data.doc_front}`)
+                doc_front.attr('src',`${data.doc_back}`)
+                doc_user.text(`${data.username}`)
+                doc_number.text(`${data.doc_number}`)
+                doc_ssn.text(`${data.ssn}`)
+                doc_name.text(`${data.doc_name}`)
+                doc_country.text(`${data.country_issued}`)
+                doc_status.text(`${data.status}`)
+                if (data.status == 'Proccessing') {
+                    doc_status.addClass('text-warning')
+                    $(`.acceptbtn`).removeAttr('disabled');
+                    $(`.declinebtn`).removeAttr('disabled');
+                } else  if(data.status == 'approved'){
+                    doc_status.addClass('text-success')
+                    $(`.acceptbtn`).attr('disabled', 'disabled');
+                    $(`.declinebtn`).attr('disabled', 'disabled');
+                }else{
+                    doc_status.addClass('text-danger')
+                    $(`.acceptbtn`).attr('disabled', 'disabled');
+                    $(`.declinebtn`).attr('disabled', 'disabled');
+                }
+
+
+               
+            },
+            complete : function () {
+                $('.over-lay').removeClass('active');
+            }
+        })
+    }
+
+    function process_doc(status) {
+        $('.over-lay').addClass('active');
+        $(`.acceptbtn`).attr('disabled', 'disabled');
+        $(`.declinebtn`).attr('disabled', 'disabled');
+        let doc_status = $('#doc-status');
+
+
+        $.ajax({
+            type : 'POST',
+            url : '/superadmin/process-document/',
+            dataType : 'json',
+            data : {
+                'doc_id' : $("input[name='doc_pk']").val(),
+                'status'  : status,
+                csrfmiddlewaretoken : $("input[name='csrfmiddlewaretoken']").val(),
+            },
+            success : function (data) {
+                $("#ajx-msg").text(`${data.msg}`)
+
+                if (data.msg == "approved") {
+                    doc_status.toggleClass('text-success')
+
+                    doc_status.text('approved')
+                } else if (data.msg == "declined") {
+                    doc_status.addClass('text-danger')
+                    doc_status.text('declined')
+                }
+            },
+            complete : function () {
+                setTimeout(() => {
+                    $(".over-lay").removeClass('active')
+                    $("#ajx-msg").text("Please Wait")
+                }, 2000);
+            }
+        })
+    }
+</script>
+ 
+{% endblock script %}

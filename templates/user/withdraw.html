@@ -1,0 +1,268 @@
+ {% extends "user_layout.html" %} {% block title %} Withdraw Funds {% endblock title %} {% block style %}
+<style>
+    .with-form {
+        display: none;
+    }
+    
+    .eth.with-form.active {
+        display: block;
+    }
+    
+    .btc.with-form.active {
+        display: block;
+    }
+    
+    .transfer.with-form.active {
+        display: block;
+    }
+    
+    .over-lay {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: none;
+    }
+    
+    .over-lay.active {
+        display: block;
+    }
+    
+    .lds-ring {
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 250px;
+    }
+    
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        margin: 0px;
+        border: 4px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+    
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock style %} {% block dialog %} {% endblock dialog %} {% block content %}
+
+<div class="over-lay">
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="openhtml">
+        <div style="margin-top: 10px;margin-right: auto;margin-left: auto;width: 50%;text-align: center;">
+            <h1 id="with-msg">Request Pending</h1><a href="#" class="closeOption">Close</a></div>
+    </div>
+</div>
+
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+
+            <div class="d-flex align-items-center justify-content-between mb-0">
+                <h1 class="h3 mb-0 text-gray-800">Withdraw</h1>
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Withdraw</li>
+                </ol>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="well">
+
+
+                        <form action="" method="post" class="withdrawForm">
+
+
+                            <div class="steptab">
+
+
+                                <div class="form-group mt-3">
+                                    <label>Method</label>
+
+                                    <select id="withdraw_mode" class=" form-control" name="withdraw_mode" required>
+                                                                 
+                                                                  <option value="btc">BTC</option>
+                                                                  <option value="eth">ETH</option>
+                                                                  <option value="transfer">Bank Transfer</option>
+                                                                   
+                                                              </select>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label>Amount in Usd</label>
+                                    <input type="number" class="form-control" placeholder="Amount(USD)" name="wamount" id="wamount" required>
+                                </div>
+
+
+                                <div class="form-group mt-4">
+                                    <h6 class="text-prim" id="result-amount"></h6>
+                                </div>
+                                <!--<div class="form-group">
+                                    <label>Wallet Address</label>
+                                    <input type="text" class="form-control" name="wallet_address" placeholder="Wallet Address" id="withdraw_address" required="">
+                                </div>-->
+
+                                <div class="form-group">
+                                    <h5 class="text-w-50">NOTE : <small class="text-muted">Your withdrawal  will  be approved within a period of 6-12 Hours,Make sure you provide a correct wallet address.
+                                                                        Your Current Balance Is : <span class="text-warning">${{user.tot_balance}}</span> 
+                                                                    </small></h5>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-success btn-block"> <span class="txt">Submit</span> </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <form class="btc with-form" action="">
+                            <input type="hidden" name="w_mode_type1" id="w_mode_type1" value="BTC">
+                            <input type="hidden" name="w_am_usd" id="w_am_usd_btc">
+                            <div class="form-group ">
+                                <label for="sender-id">Sender Id</label>
+                                <input type="text" class="form-control" name="wsender-id" id="wsender-id1" value="{{user.email}}" readonly required>
+                            </div>
+                            <div class="form-group ">
+                                <label for="wamount-btc">Amount In BTC</label>
+                                <input type="text" class="form-control" name="wamount-btc" id="wamount-btc" readonly required>
+                            </div>
+                            <div class="form-group">
+                                <label>BTC Wallet Address</label>
+                                <input type="text" class="form-control" name="wallet_addres_btc" placeholder="BTC Wallet Address" id="wallet_addres_btc" required="">
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                                <h5 class="text-w-50">NOTE : <small class="text-muted">Your withdrawal  will  be approved within a period of 6-12 Hours,Make sure you provide a correct wallet address.
+                                                                    Your Current Balance Is : <span class="text-warning">${{user.tot_balance}}</span> 
+                                                                </small></h5>
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12 col-sm-12 mt-2">
+                                <button type="submit" class="btn btn-success btn-block"> <span class="txt">Submit</span> </button>
+                            </div>
+                        </form>
+                        <form class="eth with-form" action="">
+                            <input type="hidden" name="w_mode_type2" id="w_mode_type2" value="ETH">
+                            <input type="hidden" name="w_am_usd" id="w_am_usd_eth">
+
+                            <div class="form-group ">
+                                <label for="sender-id">Sender Id</label>
+                                <input type="text" class="form-control" name="wsender-id" id="wsender-id2" value="{{user.email}}" readonly required>
+                            </div>
+                            <div class="form-group ">
+                                <label for="wamount-btc">Amount In ETH</label>
+                                <input type="text" class="form-control" name="wamount-eth" id="wamount-eth" readonly required>
+                            </div>
+                            <div class="form-group">
+                                <label>ETH Wallet Address</label>
+                                <input type="text" class="form-control" name="wallet_addres_eth" placeholder="Wallet Address" id="wallet_addres_eth" required="">
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                                <h5 class="text-w-50">NOTE : <small class="text-muted">Your withdrawal  will  be approved within a period of 6-12 Hours,Make sure you provide a correct wallet address.
+                                                                    Your Current Balance Is : <span class="text-warning">${{user.tot_balance}}</span> 
+                                                                </small></h5>
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12 col-sm-12 mt-2">
+                                <button type="submit" class="btn btn-success btn-block"> <span class="txt">Submit</span> </button>
+                            </div>
+                        </form>
+                        <form class="transfer with-form">
+                            <div class="form-row">
+                                <input type="hidden" name="w_mode_type3" id="w_mode_type3" value="Bank Transfer">
+                                <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+                                    <label>Bank</label>
+
+                                    <select id="bank" class=" form-control" name="bank" required>
+                                                                 
+                                                                  <option value="Wells Fargo">Wells Fargo</option>
+                                                                  
+                                                              </select>
+                                </div>
+                                <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+
+                                    <label for="acc_name">Account Name</label>
+                                    <input type="text" class="form-control" id="acc_name" placeholder=" " required>
+
+                                </div>
+                                <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+
+                                    <label for="card_number">Account Number</label>
+                                    <input type="number" class="form-control" id="acc_number" placeholder="xxxx xxxx xxxx xxxx" required>
+
+                                </div>
+
+                                <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+                                    <label for="card_amount">Amount</label>
+                                    <input type="number" class="form-control" id="card_amount" placeholder="Enter Amount in USD" required>
+                                </div>
+
+
+                                <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                                    <h5 class="text-w-50">NOTE : <small class="text-muted">Your withdrawal  will  be approved within a period of 6-12 Hours,Make sure you provide a correct wallet address.
+                                                                        Your Current Balance Is : <span class="text-warning">${{user.tot_balance}}</span> 
+                                                                    </small></h5>
+                                </div>
+                                <div class="form-group col-md-12 col-xs-12 col-sm-12 mt-2">
+                                    <button class="btn btn-success btn-block"> <span class="txt">Submit</span> </button>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock content %} {% block script %} {% endblock script %}

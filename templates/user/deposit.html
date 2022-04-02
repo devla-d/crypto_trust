@@ -1,0 +1,487 @@
+{% extends "user_layout.html" %} {% block title %} Deposit Funds {% endblock title %} {% block style %}
+<style>
+    .over-lay {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: none;
+    }
+    
+    .over-lay.active {
+        display: block;
+    }
+    
+    .lds-ring {
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 250px;
+    }
+    
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        margin: 0px;
+        border: 4px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+    
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock style %} {% block dialog %}
+<div class="over-lay">
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="openhtml">
+        <div style="margin-top: 10px;margin-right: auto;margin-left: auto;width: 50%;text-align: center;">
+            <h1>Request Pending</h1><a href="#" class="closeOption">Close</a></div>
+    </div>
+</div>
+
+<!--Dialog-->
+<div class="mode_btc trans-detail ">
+    <div class="container">
+        <div class="trans-content">
+
+            <div class="es-dialog-head m-dialog-head">
+                <h4>
+                    <div class="d-flex justify-content-center">
+
+                        <div class="dialog-title">Payment Details</div>
+
+                        <div class="close-btn2">
+                            <span class="fi  fi-rr-cross">
+        
+                            </span>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="depoform btc" action="">
+                        <h5 class="text-success">
+                            Send the Exact BTC to the given address</h5>
+                        <div class="form-group">
+                            <label for="basic-addon2">Send BTC to</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" value="aa1bc7c5-e83a-4094-b276-cfdbcec7918b" id="myInput" disabled>
+
+                                <div class="mytooltip input-group-append">
+                                    <button type="button" style="height: 43px;" class="input-group-text btn btn-primary" onclick="copyFunction()" onmouseout="outFunc()">
+                                                      <span class="tooltiptext" id="myTooltip">Copy </span>
+                                                      Copy
+                                                      </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group ">
+                            <label for="sender-id">Sender Id</label>
+                            <input type="text" class="form-control" name="sender-id" id="sender-id" value="{{user.email}}" readonly required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="amount-btc">Amount In Btc</label>
+                            <input type="text" class="form-control" name="amount-btc" id="amount-btc" readonly required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="amount-usd">Amount In USD</label>
+                            <input type="text" class="form-control" name="amount-usd" id="amount-usd" value="100" readonly required>
+                        </div>
+                        {% csrf_token %}<input type="hidden" name="type" id="mode_type" value="mode_btc">
+                        <div class="form-group  ">
+                            <button class="btn btn-success btn-block">Done</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--<div class="close-dialog">
+                <div class="close-btn">
+                    <span class="fi  fi-rr-cross">
+
+                    </span>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+</div>
+
+
+<div class="mode_eth trans-detail  ">
+    <div class="container">
+        <div class="trans-content">
+
+            <div class="es-dialog-head m-dialog-head">
+                <h4>
+                    <div class="d-flex justify-content-center">
+
+                        <div class="dialog-title">Payment Details</div>
+
+                        <div class="close-btn2">
+                            <span class="fi  fi-rr-cross">
+        
+                            </span>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="depoform eth" action="">
+                        <h5 class="text-success">
+                            Send the Exact ETH to the given address</h5>
+                        <div class="form-group">
+                            <label for="basic-addon2">Send ETH to</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" value="1Ax6UvUksdfQGRjJV1yKkv9KFVk3Mr8pyn" id="myInput" disabled>
+
+                                <div class="mytooltip input-group-append">
+                                    <button type="button" style="height: 43px;" class="input-group-text btn btn-primary" onclick="copyFunction()" onmouseout="outFunc()">
+                                                      <span class="tooltiptext" id="myTooltip">Copy </span>
+                                                      Copy
+                                                      </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% csrf_token %}<input type="hidden" name="type" id="mode_type2" value="mode_eth">
+                        <div class="form-group ">
+                            <label for="sender-id">Sender Id</label>
+                            <input type="text" class="form-control" name="sender-id" id="sender-id" value="{{user.email}}" readonly required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="amount-eth">Amount In ETH</label>
+                            <input type="text" class="form-control" name="amount-eth" id="amount-eth" readonly required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="amount-usd">Amount In USD</label>
+                            <input type="text" class="form-control" name="amount-usd2" id="amount-usd2" readonly required>
+                        </div>
+                        <div class="form-group  ">
+                            <button class="btn btn-success btn-block">Done</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--<div class="close-dialog">
+                <div class="close-btn">
+                    <span class="fi  fi-rr-cross">
+
+                    </span>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+</div>
+
+
+<div class="mode_card trans-detail ">
+    <div class="container">
+        <div class="trans-content">
+
+            <div class="es-dialog-head m-dialog-head">
+                <h4>
+                    <div class="d-flex justify-content-center">
+
+                        <div class="dialog-title">Payment Details</div>
+
+                        <div class="close-btn2">
+                            <span class="fi  fi-rr-cross">
+        
+                            </span>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="depoform card">
+                        <div class="form-row">
+                            {% csrf_token %}<input type="hidden" name="mode_type3" id="mode_type3" value="mode_card">
+
+                            <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+                                <label for="card_amount">Amount</label>
+                                <input type="number" class="form-control" id="card_amount" placeholder="Enter Amount in USD" required>
+                            </div>
+
+                            <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+                                <label for="card_name">Name on card</label>
+                                <input type="text" class="form-control" id="card_name" placeholder="Enter name on card" required>
+                            </div>
+
+                            <div class="form-group input-group-md col-md-6 col-xs-12 col-sm-12">
+
+                                <label for="card_number">Card Number</label>
+                                <input type="number" class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-2 col-xs-6 col-sm-4">
+
+                                <label for="exp_month">Exp Month</label>
+                                <input type="number" class="form-control" id="exp_month" placeholder="eg: 01" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-2 col-xs-6 col-sm-4">
+
+                                <label for="exp_year">Exp Year</label>
+                                <input type="number" class="form-control" id="exp_year" placeholder="eg: 2022" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-2 col-xs-12 col-sm-4">
+
+                                <label for="card_cvv">CVV</label>
+                                <input type="number" class="form-control" id="card_cvv" placeholder="Card CVV" required>
+
+                            </div>
+                        </div>
+
+
+                        <h3 class="text-primary">
+                            <i class="fi-rr-home" style="margin-left: 15px;vertical-align: middle;"></i> Billing Details</h3>
+
+                        <div class="form-row">
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+                                <label for="billing_firstName">First Name</label>
+                                <input type="text" class="form-control" id="billing_firstName" placeholder="First Name" required>
+                            </div>
+
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+                                <label for="billing_LastName">Last name</label>
+                                <input type="text" class="form-control" id="billing_LastName" placeholder="Last Name" required>
+                            </div>
+
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Email">Email</label>
+                                <input type="email" class="form-control" id="billing_Email" placeholder="Email address eg: (useremail@email.com)" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Phone">Phone</label>
+                                <input type="phone" class="form-control" id="billing_Phone" placeholder="Phone Number eg: +1234567890" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Street">Street Address</label>
+                                <input type="text" class="form-control" id="billing_Street" placeholder="Street Address" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Town">Town/City</label>
+                                <input type="text" class="form-control" id="billing_Town" placeholder="Town/City" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Country">Country</label>
+                                <input type="text" class="form-control" id="billing_Country" placeholder="Country" required>
+
+                            </div>
+                            <div class="form-group input-group-md col-md-4 col-xs-12 col-sm-12">
+
+                                <label for="billing_Postal">Postal Code</label>
+                                <input type="number" class="form-control" id="billing_Postal" placeholder="Postal Code" required>
+
+                            </div>
+
+
+                            <div class="form-group input-group-md col-md-12">
+
+                                <button class="btn btn-success btn-block" type="submit" id="proceed_mc_pay">Proceed</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!--<div class="close-dialog">
+                <div class="close-btn">
+                    <span class="fi  fi-rr-cross">
+
+                    </span>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+</div>
+
+<!--Dialog-->
+
+{% endblock dialog %} {% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+
+            <div class="d-flex align-items-center justify-content-between mb-0">
+                <h1 class="h3 mb-0 text-gray-800">Deposit</h1>
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Deposit</li>
+                </ol>
+
+            </div>
+            <div class="row hidden-lg mb-3">
+                <div class="col-lg-12">
+                    <script src="/assets/js/coingecko-coin-price-marquee-widget.js"></script>
+                    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#444444" locale="en" font-color="#ffffff"></coingecko-coin-price-marquee-widget>
+
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well">
+                        <form class="depo_info_form" action="">
+
+                            <div class="form-row">
+
+
+                                <div class="form-group col-12">
+                                    <label for="">Select Payment Method</label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <div class="radio-toolbar">
+                                        <input type="radio" name="mode" value="mode_btc" id="mode_btc" required>
+                                        <label for="mode_btc"><img src="/assets/img/bitcoin.svg" alt="method icon" width="28px"> Bitcoin</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <div class="radio-toolbar">
+                                        <input type="radio" name="mode" value="mode_eth" id="mode_eth" required>
+                                        <label for="mode_eth"> <img src="/assets/img/eth.png" alt="method icon" width="35px"> Ethereum</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <div class="radio-toolbar">
+                                        <input type="radio" name="mode" value="mode_card" id="mode_card" required>
+                                        <label for="mode_card"> <i  class="fas fa-credit-card" width="35px" style="color: coral;" id="visa_icon"></i>  Credit  Card</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <label for="amount">Amount(USD)</label>
+                                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" data-decimals="2" min="50" value="50" required />
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <button type="submit" class="btn btn-success btn-block">Submit</button>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="well ">
+                        <p class="text-white" style="text-align: justify;"><strong>Risk Warning:</strong> Trading digital options has some risks of partial or full funds loss. The value of a particular investment can both increase and decrease, and investors may lose their investment. Before investing
+                            – consider your available resources, your level of experience and the risks involved in investing. This fact should be taken into consideration by any trader who is planning to make profits by option trading. fscoptions advises
+                            its clients to read our terms and conditions carefully before opening positions on our platform. Digital options quotes displayed on the fscoptions platform are indicative rates that the company is prepared to sell options
+                            at and may not correspond to either live market quotations or quoted rates at the point of sale.</p>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %} {% block script %}
+
+
+
+
+
+
+
+
+
+
+<script>
+    function copyFunction() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied";
+    }
+
+    function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to Address";
+    }
+</script>
+{% endblock script %}

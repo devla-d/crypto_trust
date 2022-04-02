@@ -1,0 +1,356 @@
+{% extends "user_layout.html" %} {% block title %} Trade {% endblock title %} {% block style %}
+<style>
+    .over-lay {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: none;
+    }
+    
+    .over-lay.active {
+        display: block;
+    }
+    
+    .lds-ring {
+        display: block;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 243px;
+    }
+    
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        margin: 0px;
+        border: 4px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+    
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock style %} {% block dialog %} {% endblock dialog %} {% block content %}
+
+<div class="over-lay">
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="openhtml">
+        <div style="margin-top: 10px;margin-right: auto;margin-left: auto;width: 50%;text-align: center;">
+            <h1 id="trade-msg">Request Pending</h1><a href="#" class="closeOption">Close</a></div>
+    </div>
+</div>
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content" style="margin-top: 70px;">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+
+            <div class="row   mb-0">
+                <div class="col-lg-12">
+                    <div class=" well col-md-12 ">
+                        <!-- TradingView Widget BEGIN -->
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                                {
+                                    "symbols": [{
+                                        "proName": "OANDA:SPX500USD",
+                                        "title": "S&P 500"
+                                    }, {
+                                        "proName": "OANDA:NAS100USD",
+                                        "title": "Nasdaq 100"
+                                    }, {
+                                        "proName": "OANDA:EURUSD",
+                                        "title": "EUR/USD"
+                                    }, {
+                                        "proName": "BITSTAMP:BTCUSD",
+                                        "title": "BTC/USD"
+                                    }, {
+                                        "proName": "BITSTAMP:ETHUSD",
+                                        "title": "ETH/USD"
+                                    }, {
+                                        "description": "APPLE",
+                                        "proName": "NASDAQ:AAPL"
+                                    }, {
+                                        "description": "USD/GBP",
+                                        "proName": "OANDA:USDGBP"
+                                    }, {
+                                        "description": "GOOGLE",
+                                        "proName": "CBOE:VXGOG"
+                                    }, {
+                                        "description": "AUD/USD",
+                                        "proName": "OANDA:AUDUSD"
+                                    }],
+                                    "colorTheme": "dark",
+                                    "isTransparent": true,
+                                    "displayMode": "compact",
+                                    "locale": "en"
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+            <div class="row   ">
+                <div class=" col-lg-8 ">
+
+
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container card">
+                        <div id="tradingview_e8053"></div>
+
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+                <div class="col-lg-4 mt-4">
+                    <div class="well">
+                        <h5 class="text-success">Trade</h5>
+                        <form action=" " class="trade_form" method="POST">
+
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number" id="amount_trade" required name="amount" value="50" required data-decimals="2" min="50" class="form-control" placeholder="Amount">
+                                    <div class="input-group-append">
+                                        <label class="input-group-text" for="amount_trade">Amount</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select name="symbols" required id="symbols" class="form-control">
+                                              <option value="USD/BTC" >USD/BTC</option>
+                                              <option value="BCH/BTC" >BCH/BTC</option>
+                                              <option value="BCH/EUR" >BCH/EUR</option>
+                                              <option value="BCH/GBP" >BCH/GBP</option>
+                                              <option value="BTC-EOS" >BTC-EOS</option>
+                                              <option value="BTC/EUR" >BTC/EUR</option>
+                                              <option value="BTC/GBP" >BTC/GBP</option>
+                                              <option value="BTC/USD" >BTC/USD</option>
+                                              <option value="BTC/USDC" >BTC/USDC</option>
+                                              <option value="EOS/BTC" >EOS/BTC</option>
+                                              <option value="EOS/EUR" >EOS/EUR</option>
+                                              <option value="EOS/USD" >EOS/USD</option>
+                                              <option value="ETC/BTC" >ETC/BTC</option>      
+                                              <option value="ETC/EUR" >ETC/EUR</option>
+                                              <option value="ETC/GBP" >ETC/GBP</option>
+                                              <option value="ETC/USD" >ETC/USD</option>
+                                              <option value="ETH/BTC" >ETH/BTC</option>
+                                              <option value="ETH/EUR" >ETH/EUR</option>
+                                              <option value="ETH/GBP" >ETH/GBP</option>
+                                              <option value="ETH/USD" >ETH/USD</option>
+                                              <option value="LTC/BTC" >LTC/BTC</option>
+                                              <option value="LTC/EUR" >LTC/EUR</option>
+                                              <option value="LTC/GBP" >LTC/GBP</option>
+                                              <option value="LTC/USD" >LTC/USD</option>
+                                              <option value="MKR/BTC" >MKR/BTC</option>
+                                              <option value="PCP-BTC" >PCP-BTC</option>
+                                              <option value="PCP-BTC" >REP/BTC</option>
+                                              <option value="REP/USD" >REP/USD</option>
+                                              <option value="TXR/GBP">TXR/GBP</option>
+                                              <option value="XLM/BTC">XLM/BTC</option>
+                                              <option value="XLM/EUR">XLM/EUR</option>
+                                              <option value="XLM/USD">XLM/USD</option>
+                                              <option value="XRP/BTC">XRP/BTC</option>
+                                              <option value="XRP/EUR">XRP/EUR</option>
+                                              <option value="XRP/USD">XRP/USD</option>
+                                              <option value="ZEC/BTC">ZEC/BTC</option>
+                                              <option value="ZRX/BTC">ZRX/BTC</option>
+                                              <option value="ZRX/EUR">ZRX/EUR</option>
+                                              <option value="ZRX/USD">ZRX/USD</option>
+                                                         </select>
+                                    <div class="input-group-append">
+                                        <label class="input-group-text" for="showsymbols">Symbol</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select name="interval" class="form-control" id="interval">
+                                        <option value="1">1 min</option>
+                                        <option value="3">3 min</option>
+                                        <option value="5">5 min</option>
+                                        <option value="15">15 mins</option>
+                                        <option value="30">30 mins</option>
+                                        <option value="60">1 hr</option>
+                                        <option value="120">2 hr</option>
+                                        <option value="1440">1 day</option>
+                                       </select>   
+                                    <div class="input-group-append">
+                                        <label class="input-group-text">Interval</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <select class="form-control" name="leverage" id="leverage" required>
+                   
+                                        <!-- <option value="">Please select</option> -->
+                                        <option value="0.5" data-rate="high_sell" data-buy="" data-sell="3">0.5X</option>
+                                        <option value="1" data-rate="high_sell" data-buy="" data-sell="3">1.0X</option>
+                                        <option value="1.5" data-rate="high_sell" data-buy="" data-sell="3">1.5X</option>
+                                        <option value="2" data-rate="high_sell" data-buy="" data-sell="3">2.0X</option>
+                                        <option value="5" data-rate="high_sell" data-buy="" data-sell="3">5X</option>
+                                        <option value="10" data-rate="high_sell" data-buy="" data-sell="3">10X</option>
+
+                                 </select>
+
+                                    <div class="input-group-append">
+                                        <label class="input-group-text">Leverage</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-group btn-block mt-3">
+                                <button onclick="trade('buy')" type="button" class="btn btn-success mr-2">Buy <i class="fi fi-rr-arrow-down" style=" transform: rotate(35deg);"></i>
+                                                     </button>
+
+                                <button onclick="trade('sell')" type="button" class="btn btn-warning">sell  <i class="fi fi-rr-arrow-up" style=" transform: rotate(35deg);"></i></button>
+
+                            </div>
+
+                        </form>
+                        <div class="mt-3">
+                            <a href="{% url 'trading_history' %}" class="btn btn-primary btn-block">
+                                <span class="fi-rr-time-past mt-1"></span> Trading History
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <!-- Container Fluid-->
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock content %} {% block script %}
+
+<script>
+    function trade(ty_pe) {
+
+        $('.loading-card').addClass('active');
+
+        let amount = $('#amount_trade').val();
+        let symbol = $('#symbols').val();
+        let interval = $('#interval').val();
+        let leverage = $('#leverage').val();
+        let trade_ty_pe = ty_pe;
+
+        $.ajax({
+            type: 'POST',
+            url: '/trade/',
+            dataType: 'json',
+            data: {
+                "trade_ty_pe": trade_ty_pe,
+                "amount": amount,
+                "leverage": leverage,
+                "interval": interval,
+                "symbol": symbol,
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function(data) {
+                $('#trade-msg').text(`${data.msg}`)
+                $('.over-lay').addClass('active')
+
+
+            },
+            complete: function() {
+                //$(this)[0].reset();
+                $('.loading-card').removeClass('active');
+            }
+        })
+
+    }
+</script>
+
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    new TradingView.widget({
+            "width": "100%",
+            "height": 460,
+            "symbol": "BITSTAMP:BTCUSD",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "Dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f3f6",
+            "enable_publishing": false,
+            "withdateranges": true,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "show_popup_button": true,
+            "popup_width": "1000",
+            "popup_height": "650",
+            "container_id": "tradingview_e8053"
+        }
+
+    );
+</script>
+
+{% endblock script %}

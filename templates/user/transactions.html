@@ -1,0 +1,243 @@
+{% extends "user_layout.html" %} {% block title %} Financial Transactions {% endblock title %} {% block style %}
+<style>
+    .dialog-content {
+        padding: 55px 0;
+    }
+</style> {% endblock style %} {% block dialog %}
+
+<!--Dialog-->
+<div class="trans-detail ">
+    <div class="container">
+        <div class="trans-content">
+            <div class="es-dialog-head m-dialog-head">
+                <h4>
+                    <div>
+                        <div class="dialog-title">Transaction Details</div>
+                    </div>
+                </h4>
+            </div>
+            <div class="dialog-content">
+                <div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left amount"><span>Amount</span> (USD)
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right amount m-row-value">$<span id="trans-amount"></span></div>
+                    </div>
+                </div>
+
+
+                <div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left"><span>Status</span>
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right m-row-value" id="trans-status"></div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left"><span>Time</span>
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right m-row-value" id="trans-time"></div>
+                    </div>
+                </div>
+
+
+
+                <div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left"><span>Type</span>
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right m-row-value" id="trans-type">Deposit</div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left"><span>Method</span>
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right m-row-value" id="trans-method"> </div>
+                    </div>
+                </div>
+
+
+
+                <!----<div class="m-table-row m-row">
+                    <div class="m-table-cell">
+                        <div class="m-left"><span>Trade No</span>
+                        </div>
+                    </div>
+                    <div class="m-table-cell">
+                        <div class="m-right m-row-value" id="trans-no">220105084805trd61</div>
+                    </div>
+                </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div class="close-dialog">
+                <div class="close-btn">
+                    <span class="fi  fi-rr-cross">
+
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--Dialog-->
+
+
+{% endblock dialog %} {% block content %}
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+            <div class="d-flex align-items-center justify-content-between mb-0">
+                <h1 class="h3 mb-0 text-gray-800">Transactions</h1>
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">History</li>
+                </ol>
+
+            </div>
+            <div class="row hidden-lg mb-3">
+                <div class="col-lg-12">
+                    <script src="/assets/js/coingecko-coin-price-marquee-widget.js"></script>
+                    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#444444" locale="en" font-color="#ffffff"></coingecko-coin-price-marquee-widget>
+
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-lg-12 hidden-xs">
+                    <div class="card mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">History</h6>
+                        </div>
+                        <div class="table-responsive-sm p-3">
+                            <table class="table table-sm table-striped table-bordered bootstrap-datatable datatable responsive text-white" id="dataTableHover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Method</th>
+                                        <th>Amount(USD)</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <!--<th> </th>-->
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {% for obj in transactions %}
+                                    <tr>
+
+
+                                        <td class="">{{obj.trans_type}}</td>
+                                        <td class="center">
+                                            {% if obj.card_detail %} Card {% elif obj.bank_details %} {{obj.bank_details.ty_pe}} {% else %} {{obj.wallet_detail.coin_tpye}} {% endif %}
+                                        </td>
+                                        <td class="center">${{obj.amount}}</td>
+                                        <td class="center">{{obj.date|date:"Y-M-d g:iA"}}</td>
+                                        <td class="center  sorting_1">
+                                            {% if obj.status == 'pending' %}
+                                            <span class="badge badge-warning">Pending</span> {% elif obj.status == 'approved' %}
+                                            <span class="badge badge-success">Approved</span> {% else %}
+                                            <span class="badge badge-danger">Failed</span> {% endif %}
+                                        </td>
+                                        <!--<td class="center"><a href="#">Details</a></td>-->
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 hidden-lg">
+
+                    {% if transactions %}
+                    <div class="row justify-content-center">
+                        {% for obj in transactions %}
+                        <div data-pk="{{obj.id}}" class="col-12 mb-4 trans-d-form">
+                            <div class="card trans">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">{{obj.trans_type}}</div>
+                                            <div class="small mb-0 mr-3   text-gray-800">{{obj.date|date:"Y-M-d g:iA"}}</div>
+
+                                        </div>
+                                        <div class="col-auto">
+                                            {% if obj.status == 'pending' %}
+                                            <span class="text-warning">${{obj.amount}}</span> {% elif obj.status == 'approved' %}
+                                            <span class="text-success">${{obj.amount}}</span> {% else %}
+                                            <span class="text-danger">${{obj.amount}}</span> {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="well mt-5">
+                        <h4>No Transactions</h4>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- Container Fluid-->
+    </div>
+</div>
+
+{% endblock content %} {% block script %}
+
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable(); // ID From dataTable 
+        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    });
+</script>
+{% endblock script %}

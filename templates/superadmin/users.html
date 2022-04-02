@@ -1,0 +1,342 @@
+{% extends 'super_layout.html' %}{% load crispy_forms_tags %}
+{% block title %}
+Users
+{% endblock title %}
+{% block style %}
+<style>
+    ul{
+        padding: 0;
+    }
+    ul.user_balance_details li {
+    display: inline-block;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #F1F4F8;
+    text-align: center;
+    margin-left: 6px;
+}
+</style>
+{% endblock style %}
+
+
+{% block editor %}
+<div class="editor" role="document">
+    <div class="container">
+        <div class="editor-header">
+            <div class="text-center">
+                <h3 class="text-gray-900 ">EDIT USER</h3>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <!-- Form Basic -->
+                <div class="card mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"> </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="media mb-5">
+                                <img class="mr-3 user__avatar mr-0 mr-sm-3 " src="/assets/superadmin/img/img_258083.png" style="max-width: 15%" alt="">
+                                <div class="media-body ">
+                                    <h4 class="mb-2" id="user_name"> sshadmin </h4>
+                                    <p class="mb-1"> <span ><i class="fa fa-phone mr-2 has-text-link"></i></span> <span id="user_phone"></span></p>
+                                    <p class="mb-1"><a href="/manager/user/60/send-message/"> <span><i class="fa fa-envelope mr-2 has-text-link"></i></span>
+                                        <span id="user_email"></span>                                       </a></p>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-lg-6">
+                                 <ul class="user_balance_details">
+                                     <li>
+                                         <p>Total Balance</p> <p>$<span id="user_tot_bal"></span></p>
+                                    </li>
+                                    <li>
+                                         <p>Amount Invested</p> <p>$<span id="user_amount_invested"></span></p>
+                                    </li>
+                                    <li>
+                                        <p>Deposit Bal</p> <p>$<span id="user_depo_bal"></span></p>
+                                    </li>
+    
+                                    <li class="">
+                                        <p>Total Withdraw</p> <p>$<span id="user_with_bal"></span></p>
+                                    </li>
+
+                                    <li class="">
+                                        <p>Total Referral</p> <p><span id="user_ref"></span></p>
+                                    </li>
+
+                                    <li class="">
+                                        <p>Referral Bal</p> <p>$<span id="user_ref_bal"></span></p>
+                                    </li>
+    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" col-md-12 mb-3 ">
+                                <form action="" method="POST" class="creditform">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_pk" value="">
+                                    <div class="form-row">
+
+                                        <div class="form-group col-6">
+                                            <label for=""> Deposit Balance</label>
+                                            <input type="number" name="depoamount" class="form-control bg-light border-1 small" placeholder="amount Deposited in USD" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;" value="0">
+    
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for=""> Total Balance</label>
+                                            <input type="number" name="totamount" class="form-control bg-light border-1 small" placeholder="Total Balance" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;" value="0">
+    
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <button type="submit" class="btn btn-secondary btn-block"> Update</button>
+                                        </div>
+                                           
+                                    </div>
+                                    
+                                     
+                                  </form>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex space-bt">
+                    <button id="closebtn" type="submit" class="btn btn-danger">Close</button>
+                    <a href="#" id="log_acc" target="_blank"  class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+                </div>
+              <!--User edit Form-
+              <div id="userEditcard" class="card collapse mb-4 mt-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary"> Update User</h6>
+                </div>
+                <div class="card-body">
+                   
+                    <div class="row">
+                        <div class=" col-md-12 mb-3 ">
+                            <form action="" method="POST" class="UserUpdateform">
+                                {% csrf_token %}
+                               
+                                 
+                              </form>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+              <!--user edit form-->
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock editor %}
+
+{% block content %}
+
+<!--[container-fluid]-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Users</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Users</li>
+        </ol>
+    </div>
+    <div class="row" id="hiddensm">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+                </div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Username</th>
+                                <th>email</th>
+                                <th>Balance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                         
+                        <tbody>
+                               {% for obj in users %}
+                            <tr>
+                                <td>
+                                    <a href="#">{{obj.fullname}}</a>
+                                </td>
+                                <td>{{obj.email}}</td>
+                                <td><span class="badge badge-success">${{obj.tot_balance}}</span></td>
+<td><a href="#/{{obj.id}}" onclick="(get_user_by_pk('{{obj.id}}'))">Details</a></td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="hiddenxl">
+
+        {% for obj in users %}
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="#/{{obj.id}}" onclick="(get_user_by_pk('{{obj.id}}'))" class="card h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{obj.username}}</div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="text-success mr-2"><i class="fa"></i>${{obj.tot_balance}}</span>
+                                <span>Joined {{obj.date_joined|timesince}}</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <img class="img-profile rounded-circle" src="https://eu.ui-avatars.com/api/?name={{obj.username}}" style="max-width: 42px">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+<!--[container-fluid ends]-->
+
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>copyright &copy;
+                <script> document.write(new Date().getFullYear()); </script> - developed by
+                <b><a href="#" target="_blank">Sammy</a></b>
+            </span>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+
+
+
+{% endblock content %}
+{% block script %}
+
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable(); // ID From dataTable 
+        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+
+    });
+
+    function changefilename(name) {
+
+        $('.custom-file-label').text(name)
+    }
+
+    function get_user_by_pk(pk) {
+        $(".over-lay").addClass('active');
+        let log_acc = $('#log_acc');
+        log_acc.attr('href',`/superadmin/user/${pk}/`)
+        let user_name = $('#user_name');
+        let user_email = $('#user_email');
+        let user_phone = $('#user_phone');
+        let user_tot_bal = $('#user_tot_bal');
+        let user_amount_invested = $('#user_amount_invested');
+        let user_depo_bal = $('#user_depo_bal');
+        let user_with_bal = $('#user_with_bal');
+        let user_ref = $('#user_ref');
+        let user_ref_bal = $('#user_ref_bal');
+        let depoamount = $("input[name='depoamount']");
+        let totamount = $("input[name='totamount']");
+        let user_pk = $("input[name='user_pk']");
+
+        $.ajax({
+            type : "POST",
+            url : '/superadmin/users/',
+            dataType : 'json',
+            
+            data :{
+                'user_pk':pk,
+                csrfmiddlewaretoken : $("input[name='csrfmiddlewaretoken']").val()
+            },
+            
+            success : function (data) {
+                $('.editor').addClass('active')
+                user_name.text(`${data.username}`)
+                user_email.text(`${data.user_email}`)
+                user_phone.text(`${data.user_phone}`)
+                user_tot_bal.text(`${data.user_tot_bal}`)
+                user_amount_invested.text(`${data.user_amount_invested}`)
+                user_depo_bal.text(`${data.user_depo_bal}`)
+                user_with_bal.text(`${data.user_with_bal}`)
+                user_ref.text(`${data.user_ref}`)
+                user_ref_bal.text(`${data.user_ref_bal}`)
+
+
+                depoamount.val(data.user_depo_bal)
+                totamount.val(`${data.user_tot_bal}`)
+                user_pk.val(`${data.user_pk}`)
+            },
+
+            complete : function () {
+                $(".over-lay").removeClass('active')
+            }
+
+
+        });
+    }
+
+    $('.creditform').on('submit',function (e) {
+        e.preventDefault();
+        let depoamount = $("input[name='depoamount']");
+        let totamount = $("input[name='totamount']");
+        let user_tot_bal = $('#user_tot_bal');
+         let user_depo_bal = $('#user_depo_bal');
+         let user_pk = $("input[name='user_pk']");
+        $(".over-lay").addClass('active');
+        $.ajax({
+            type : "POST",
+            url : '/superadmin/users/',
+            dataType : 'json',
+            
+            data :{
+                'submit':"credit_user",
+                'depoamount' : depoamount.val(),
+                'totamount' : totamount.val(),
+                "user_pk" : user_pk.val(),
+                csrfmiddlewaretoken : $("input[name='csrfmiddlewaretoken']").val()
+            },
+            success : function (data) {
+                if (data.msg == 'success') {
+                    user_tot_bal.text(`${data.user_tot_bal}`)
+                 user_depo_bal.text(`${data.user_depo_bal}`)
+                 $("#ajx-msg").text(`${data.msg}`)
+                }else{
+                   
+                    $("#ajx-msg").text(`${data.msg}`)
+                }
+                
+            },
+            complete : function(){
+                setTimeout(() => {
+                    $(".over-lay").removeClass('active')
+                    $("#ajx-msg").text("Please Wait")
+                }, 2000);
+            }
+        })
+    })
+</script>
+{% endblock script %}

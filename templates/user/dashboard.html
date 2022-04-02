@@ -1,0 +1,284 @@
+{% extends "user_layout.html" %} {% block title %} Trading Dashboard {% endblock title %} {% block style %} {% endblock style %} {% block dialog %} {% endblock dialog %} {% block content %}
+
+
+<div id="center-content" class="   ">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <script src="/assets/js/coingecko-coin-price-marquee-widget.js"></script>
+                <coingecko-coin-price-marquee-widget coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#444444" locale="en" font-color="#ffffff"></coingecko-coin-price-marquee-widget>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <a href="{% url 'deposit' %}" class="btn btn-success btn-block">Deposite</a>
+            </div>
+            <div class="col-6">
+                <a href="{% url 'trade' %}" class="btn btn-danger btn-block">Trade</a>
+            </div>
+        </div>
+        <div class="row  mt-3">
+            <div class=" col-lg-12 ">
+
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container card">
+                    <div id="tradingview_e8053"></div>
+
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-6  py-2">
+                <div class="card__item">
+                    <div class="card__body">
+                        <div class="rounded-circle mb-2 bg-white-light fa_card">
+                            <i class="fas fa-credit-card fa-2x fa__item text-success"></i>
+                        </div>
+                        <h3 class="card-balance">{{currency}}<span class="curency-amount" data-usd="{{user.tot_balance}}">{{user.tot_balance}}</span>
+                        </h3>
+                        <p>Total Balance </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6  py-2">
+                <div class="card__item">
+                    <div class="card__body">
+                        <div class="rounded-circle mb-2 bg-white-light fa_card">
+                            <i class="fas  fa-donate fa-2x fa__item text-warning"></i>
+                        </div>
+
+                        <h3 class="card-balance">{{user.refferal}}</h3>
+                        <p>Total Referrals</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6  py-2">
+                <div class="card__item">
+                    <div class="card__body">
+                        <div class="rounded-circle mb-2 bg-white-light fa_card">
+                            <i class="fas fa-chart-bar fa-2x fa__item"></i>
+                        </div>
+
+                        <h3 class="card-balance">{{currency}}<span class="curency-amount" data-usd="{{user.deposit_balance}}">{{user.deposit_balance}}</span></h3>
+                        <p>Deposit Balance</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6  py-2">
+                <div class="card__item">
+                    <div class="card__body">
+                        <div class="rounded-circle mb-2 bg-white-light fa_card">
+                            <i class="fas fa-download fa-2x fa__item text-danger"></i>
+                        </div>
+                        <h3 class="card-balance">{{currency}}<span class="curency-amount" data-usd="{{user.amount_withdraw}}">{{user.amount_withdraw}}</sapn></h3>
+                        <p>Withdrawal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="right-content">
+    <div class="well" style="height: 500px;">
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                    "colorTheme": "dark",
+                    "dateRange": "12M",
+                    "showChart": false,
+                    "locale": "en",
+                    "width": "100%",
+                    "height": "100%",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "tabs": [{
+                        "title": "Commodities",
+                        "symbols": [{
+                            "s": "CME_MINI:ES1!",
+                            "d": "S&P 500"
+                        }, {
+                            "s": "CME:6E1!",
+                            "d": "Euro"
+                        }, {
+                            "s": "COMEX:GC1!",
+                            "d": "Gold"
+                        }, {
+                            "s": "NYMEX:CL1!",
+                            "d": "Crude Oil"
+                        }, {
+                            "s": "NYMEX:NG1!",
+                            "d": "Natural Gas"
+                        }, {
+                            "s": "CBOT:ZC1!",
+                            "d": "Corn"
+                        }],
+                        "originalTitle": "Commodities"
+                    }, {
+                        "title": "Forex",
+                        "symbols": [{
+                            "s": "FX:EURUSD"
+                        }, {
+                            "s": "FX:GBPUSD"
+                        }, {
+                            "s": "FX:USDJPY"
+                        }, {
+                            "s": "FX:USDCHF"
+                        }, {
+                            "s": "FX:AUDUSD"
+                        }, {
+                            "s": "FX:USDCAD"
+                        }, {
+                            "s": "OANDA:GBPCAD",
+                            "d": "GBPCAD"
+                        }],
+                        "originalTitle": "Forex"
+                    }, {
+                        "title": "Stock",
+                        "symbols": [{
+                            "s": "NASDAQ:AAPL",
+                            "d": "Apple"
+                        }, {
+                            "s": "NASDAQ:TSLA",
+                            "d": "Tesla"
+                        }, {
+                            "s": "NASDAQ:AMZN",
+                            "d": "Amazon"
+                        }, {
+                            "s": "NASDAQ:FB",
+                            "d": "Facebook"
+                        }, {
+                            "s": "NASDAQ:MSFT",
+                            "d": "Microsoft"
+                        }, {
+                            "s": "BIST:ASELS",
+                            "d": "Alsesan"
+                        }, {
+                            "s": "NASDAQ:NFLX",
+                            "d": "Netflix"
+                        }]
+                    }, {
+                        "title": "Cryptocurrencies",
+                        "symbols": [{
+                            "s": "BITBAY:BTCUSD",
+                            "d": "BTCUSD"
+                        }, {
+                            "s": "KRAKEN:ETHUSD",
+                            "d": "ETHUSD"
+                        }, {
+                            "s": "BITSTAMP:XRPUSD",
+                            "d": "XRPUSD"
+                        }, {
+                            "s": "BINANCE:MITHBTC",
+                            "d": "MITHBTC"
+                        }, {
+                            "s": "KRAKEN:ADAUSD",
+                            "d": "ADAUSD"
+                        }, {
+                            "s": "KRAKEN:LTCUSD",
+                            "d": "LTCUSD"
+                        }, {
+                            "s": "BITFINEX:XMRUSD",
+                            "d": "XMRUSD"
+                        }]
+                    }]
+                }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
+
+    </div>
+
+    <div class="row">
+        <div class=" col-lg-12">
+
+            <div class="total-balance">
+                <iframe width="100%" scrolling="yes" allowtransparency="true" frameborder="0" src="https://cryptopanic.com/widgets/news/?bg_color=131722&amp;font_family=sans&amp;header_bg_color=30343B&amp;header_text_color=FFFFFF&amp;link_color=FFFFFF&amp;news_feed=trending&amp;posts_limit=20&amp;text_color=E50202&amp;"
+                    height="400px"></iframe>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %} {% block script %}
+
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    new TradingView.widget({
+            "width": "100%",
+            "height": 460,
+            "symbol": "BITSTAMP:BTCUSD",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "Dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f3f6",
+            "enable_publishing": false,
+            "withdateranges": true,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "show_popup_button": true,
+            "popup_width": "1000",
+            "popup_height": "650",
+            "container_id": "tradingview_e8053"
+        }
+
+    );
+    
+    
+    // include api for currency change
+const api = "https://api.exchangerate-api.com/v4/latest/USD";
+var fromCurrecy =  "USD"
+var toCurrecy =  $(".wrapper").data("currency-code")
+console.log(fromCurrecy,toCurrecy)
+
+$( document ).ready(function() {
+    getResults();
+});
+
+    function getResults() {
+    fetch(`${api}`)
+        .then(currency => {
+            return currency.json();
+        }).then(displayResults);
+}
+  
+// display results after convertion
+function displayResults(currency) {
+    let fromRate = currency.rates[fromCurrecy];
+    let toRate = currency.rates[toCurrecy];
+    
+       
+       
+       
+       
+    $('.curency-amount').each(function() {
+        var amount_in_usd = $(this).data('usd')
+        $(this).text(`${((toRate / fromRate) * amount_in_usd).toFixed(2)}`)
+        console.log("HELLO")
+        console.log(((toRate / fromRate) * amount_in_usd).toFixed(2))
+    })
+     
+}
+
+</script>
+{% endblock script %}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock title %} | CryptoTrustrade
+    </title>    <link href="/assets/img/bsfav.png" rel="icon">
+
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/icons/cryptocoins/css/cryptocoins.css">
+    <link rel="stylesheet" href="/assets/icons/cryptocoins/css/cryptocoins-colors.css">
+    <link rel="stylesheet" href="/assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/assets/icons/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/assets/icons/uicons-regular-rounded/uicons-regular-rounded/css/uicons-regular-rounded.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/vendor/select2/dist/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.css">
+    <link rel="stylesheet" href="/assets/css/toastr.min.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables/dataTables.bootstrap4.min.css"> {% block style %} {% endblock style %}
+
+</head>
+
+<body>
+    {% if messages %} {% for msg in messages %}
+    <div style="display: none;" class="messages" data-msg="{{ msg }}"></div>
+    {% endfor %} {% endif %}
+    <div class="loading-card ">
+        <div class="wait-card">
+            <h5 id="wait-text"><i class="fa fa-spinner fa-spin"></i> <span>Please Wait</span></h5>
+        </div>
+    </div>
+    <!--Dialog-->
+    {% block dialog %} {% endblock dialog %}
+
+    <!--Dialog-->
+
+    <!--[HEADER]-->
+    <header id="dashheader">
+        <div class="container-fliud">
+            <nav>
+                <div class="nav-brand nav-logo">
+                    <img src="/assets/img/bslogo1.png" alt="LOGO">
+                </div>
+                <ul class="main-menu  ">
+                 
+                    <!--<li class="nav-item hidden-lg">
+                        <div class="alert alert-success">
+                            <i class="fi-rr-exclamation" style="margin-right: 15px;"></i> Account Verified
+                        </div>
+                    </li>-->
+                 
+                 
+                    <li class="nav-item active"><a href="{% url 'dashboard' %}" class="nav-link active"><span class=" fi-rr-apps"></span> Dashboard</a></li>
+
+                    <li class="nav-item"><a href="{% url 'trading_history' %}" class="nav-link"><span class="fi-rr-time-past"></span> Trading History</a></li>
+                    <li class="nav-item"><a href="{% url 'withdraw' %}" class="nav-link"><span class="fi-rr-bank"></span> Withdraw</a></li>
+                    <!--<li class="nav-item"><a href="{% url 'verification' %}" class="nav-link"><span class="fi-rr-file-check"></span> Verification</a></li>-->
+                    <li class="nav-item"><a href="{% url 'transactions' %}" class="nav-link"><span class="fi-rr-credit-card"></span> Transactions</a></li>
+                    <li class="nav-item"><a href="{% url 'account' %}" class="nav-link"><span class="fi-rr-mode-portrait"></span> Account</a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"><span class="fi-rr-power"></span> Logout</a></li>
+
+                </ul>
+
+                <ul class="notify">
+                    <li class="nav-item    mx-1">
+                        <a class="nav-link  " href="{% url 'notify' %}">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <span class="badge badge-danger badge-counter">{{user_notify_count}}+</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="notifymb">
+                    <li class="nav-item    mx-1">
+                        <a class="nav-link  " href="{% url 'notify' %}">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <span class="badge badge-danger badge-counter">{{user_notify_count}}+</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="hamburger">
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                </div>
+            </nav>
+        </div>
+
+    </header>
+    <!--[HEADER Ends]-->
+
+
+    <div class="wrapper" data-currency="{{currency}}" data-currency-code="{{sysm}}">
+
+        <!--[sidebar]-->
+        <ul class="navbar-nav  sidebar">
+            <li class="nav-item mt-2">
+                <div class="media">
+                    <img src="https://eu.ui-avatars.com/api/?name={{user.username}}" class="mr-3 rounded" alt="{{user.username}}">
+                    <div class="media-body">
+                        <h5 class="mt-1">{{user.fullname}}</h5>
+                        <p class="text-success">{{user.email}}</p>
+                    </div>
+                </div>
+            </li>
+          
+            <!--<li class="nav-item  ">
+                <div class="alert alert-success">
+                    <i class="fi-rr-exclamation" style="margin-right: 15px;"></i> Account Verified
+                </div>
+            </li>-->
+          
+            <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link active"><span class=" fi-rr-apps"></span> Dashboard</a></li>
+
+            <li class="nav-item"><a href="{% url 'trading_history' %}" class="nav-link"><span class="fi-rr-time-past"></span> Trading History</a></li>
+            <li class="nav-item"><a href="{% url 'withdraw' %}" class="nav-link"><span class="fi-rr-bank"></span> Withdraw</a></li>
+            <!--<li class="nav-item"><a href="{% url 'verification' %}" class="nav-link"><span class="fi-rr-file-check"></span> Verification</a></li>-->
+            <li class="nav-item"><a href="{% url 'transactions' %}" class="nav-link"><span class="fi-rr-credit-card"></span> Transactions</a></li>
+            <li class="nav-item"><a href="{% url 'account' %}" class="nav-link"><span class="fi-rr-mode-portrait"></span> Account</a></li>
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"><span class="fi-rr-power"></span> Logout</a></li>
+
+        </ul>
+
+
+
+        <!--[sidebar]-->
+        {% block content %} {% endblock content %}
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/assets/vendor/select2/dist/js/select2.min.js"></script>
+    <script src="/assets/js/owl.carousel.js"></script>
+    <script src="/assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/js/toastr.min.js"></script>
+    {% if messages %}
+    <script src="/assets/js/toastr-init.js"></script>
+    {% endif %}
+    <script src="/assets/js/circle-progress.min.js"></script>
+    <script src="/assets/js/circle-progress-init.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    {% block script %} {% endblock script %}
+
+</body>
+
+</html>
